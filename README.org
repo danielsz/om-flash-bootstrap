@@ -36,10 +36,10 @@ Put the widget somewhere in your application:
 Now you can use any one of the following: 
 
 #+BEGIN_SRC clojure
-(warn app-state “This is a message with warning level”)
-(info app-state “This is a message with info level”)
-(alert app-state “This is a message with danger level”)
-(bless app-state “This is a message with success level”)
+(flash/warn app-state “This is a message with warning level”)
+(flash/info app-state “This is a message with info level”)
+(flash/alert app-state “This is a message with danger level”)
+(flash/bless app-state “This is a message with success level”)
 #+END_SRC
 ** License
 Copyright © 2016 Daniel Szmulewicz
