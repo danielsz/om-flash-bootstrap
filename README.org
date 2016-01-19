@@ -12,6 +12,7 @@ Where the current version is:
 
 [[https://img.shields.io/clojars/v/org.danielsz/om-flash-bootstrap.svg]]
 
+Implicit dependencies are [[https://github.com/omcljs/om][Om]] and [[http://getbootstrap.com/][Bootstrap]].
 ** Usage
 Require the namespace: 
 
