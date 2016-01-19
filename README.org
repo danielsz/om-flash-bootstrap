@@ -1,6 +1,6 @@
 * om-flash-bootstrap
 Flash messages in the UI when something noteworthy happens.
-
+Note: /In this context, flash refers to Rails [[http://api.rubyonrails.org/classes/ActionDispatch/Flash.html][terminology]]./
 ** Installation
 Require in Leinigen or Boot:
 
