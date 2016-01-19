@@ -1,5 +1,5 @@
 * om-flash-bootstrap
-Flash messages in the UI upon events of interest.
+Flash messages in the UI when something noteworthy happens.
 
 ** Installation
 Require in Leinigen or Boot:
@@ -10,7 +10,7 @@ Require in Leinigen or Boot:
 
 Where the current version is:
 
-https://img.shields.io/clojars/v/org.danielsz/om-flash-bootstrap.svg
+[[https://img.shields.io/clojars/v/org.danielsz/om-flash-bootstrap.svg]]
 
 ** Usage
 Require the namespace: 
