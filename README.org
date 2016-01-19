@@ -1,0 +1,45 @@
+* om-flash-bootstrap
+Flash messages in the UI upon events of interest.
+
+** Installation
+Require in Leinigen or Boot:
+
+#+BEGIN_SRC clojure
+[org.danielsz/om-flash-bootstrap "0.1.0-SNAPSHOT"]
+#+END_SRC
+
+Where the current version is:
+
+[[http://clojars.org/danielsz/om-flash-bootstrap/latest-version.svg]]
+** Usage
+Require the namespace: 
+
+#+BEGIN_SRC 
+(require ‘[om-flash-bootstrap.core :as flash])
+#+END_SRC
+
+Make sure the app state has a key called flash.
+
+#+BEGIN_SRC 
+(def app-state (atom {:flash {}
+                      ...}))
+#+END_SRC
+
+Put the widget somewhere in your application:
+
+#+BEGIN_SRC clojure
+(om/build flash/widget (:flash data) {:react-key "Flash"})
+#+END_SRC
+
+Now you can use any one of the following: 
+
+#+BEGIN_SRC clojure
+(warn app-state “This is a message with warning level”)
+(info app-state “This is a message with info level”)
+(alert app-state “This is a message with danger level”)
+(bless app-state “This is a message with success level”)
+#+END_SRC
+** License
+Copyright © 2016 Daniel Szmulewicz
+
+Distributed under the Eclipse Public License.
