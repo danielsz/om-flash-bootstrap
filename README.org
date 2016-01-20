@@ -19,29 +19,30 @@ Implicit dependencies are [[https://github.com/omcljs/om][Om]] and [[http://getb
 Require the namespace: 
 
 #+BEGIN_SRC 
-(require ‘[om-flash-bootstrap.core :as flash])
+(require ‘[om-flash-bootstrap.core :as f])
 #+END_SRC
 
-Make sure the app state has a key called flash.
+Make sure the app state has a key called flash, and create a ref-cursor.
 
 #+BEGIN_SRC 
 (def app-state (atom {:flash {}
                       ...}))
+(def flash #(om/ref-cursor (:flash (om/root-cursor state)))
 #+END_SRC
 
 Put the widget somewhere in your application:
 
 #+BEGIN_SRC clojure
-(om/build flash/widget (:flash data) {:react-key "Flash"})
+(om/build f/widget (:flash flash :timeout 3) {:react-key "Flash"})
 #+END_SRC
 
 Now you can use any one of the following: 
 
 #+BEGIN_SRC clojure
-(flash/warn app-state “This is a message with warning level”)
-(flash/info app-state “This is a message with info level”)
-(flash/alert app-state “This is a message with danger level”)
-(flash/bless app-state “This is a message with success level”)
+(f/warn flash “This is a message with warning level”)
+(f/info flash “This is a message with info level”)
+(f/alert flash “This is a message with danger level”)
+(f/bless flash “This is a message with success level”)
 #+END_SRC
 ** License
 Copyright © 2016 Daniel Szmulewicz

@@ -2,23 +2,19 @@
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
-(defn warn [state message]
-  (let [cursor (om/ref-cursor (:flash (om/root-cursor state)))]
-  (om/update! cursor {:message message :level :warning})))
+(defn warn [cursor message]
+  (om/update! (cursor) {:message message :level :warning}))
 
-(defn bless [state message]
-  (let [cursor (om/ref-cursor (:flash (om/root-cursor state)))]
-    (om/update! cursor {:message message :level :success})))
+(defn bless [cursor message]
+  (om/update! (cursor) {:message message :level :success}))
 
-(defn alert [state message]
-  (let [cursor (om/ref-cursor (:flash (om/root-cursor state)))]
-    (om/update! cursor {:message message :level :danger})))
+(defn alert [cursor message]
+  (om/update! (cursor) {:message message :level :danger}))
 
-(defn info [state message]
-  (let [cursor (om/ref-cursor (:flash (om/root-cursor state)))]
-  (om/update! cursor {:message message :level :info})))
+(defn info [cursor message]
+  (om/update! (cursor) {:message message :level :info}))
 
-(defn widget [data owner]
+(defn widget [{:keys [timeout flash]} owner]
   (reify
     om/IDisplayName
     (display-name [this]
@@ -31,18 +27,19 @@
       (when (not (empty? next-props))
         (om/set-state! owner :display/state :show)
         (js/clearTimeout (om/get-state owner :handler-id))
-        (om/set-state! owner :handler-id (js/setTimeout #(do (om/update! data {})
-                                                             (om/set-state! owner :display/state :hidden)) 2000))))
+        (om/set-state! owner :handler-id (js/setTimeout #(do (om/update! (flash) {})
+                                                             (om/set-state! owner :display/state :hidden)) (* timeout 2000)))))
     om/IRenderState
     (render-state [_ state]
-      (let [types {:success {:class "alert-success" :prefix "Well done!"} 
+      (let [flash (om/observe owner (flash))
+            types {:success {:class "alert-success" :prefix "Well done!"} 
                    :info {:class "alert-info" :prefix "Info!"}
                    :warning {:class "alert-warning" :prefix "Sorry!"}
                    :danger {:class "alert-danger" :prefix "On no!"}}]
         (case (:display/state state)
           :show
           (dom/div #js {:id "flash"
-                        :className (str "alert fade in " (:class ((:level data) types)))}
-                   (dom/strong nil (:prefix ((:level data) types)))
-                   (str " " (:message data)))
+                        :className (str "alert fade in " (:class ((:level flash) types)))}
+                   (dom/strong nil (:prefix ((:level flash) types)))
+                   (str " " (:message flash)))
           :hidden nil)))))
