@@ -3,16 +3,16 @@
             [om.dom :as dom :include-macros true]))
 
 (defn warn [cursor message]
-  (om/update! (cursor) {:message message :level :warning}))
+  (om/update! (cursor) {:message message :level :warning :timestamp (.getTime (js/Date.))}))
 
 (defn bless [cursor message]
-  (om/update! (cursor) {:message message :level :success}))
+  (om/update! (cursor) {:message message :level :success :timestamp (.getTime (js/Date.))}))
 
 (defn alert [cursor message]
-  (om/update! (cursor) {:message message :level :danger}))
+  (om/update! (cursor) {:message message :level :danger :timestamp (.getTime (js/Date.))}))
 
 (defn info [cursor message]
-  (om/update! (cursor) {:message message :level :info}))
+  (om/update! (cursor) {:message message :level :info :timestamp (.getTime (js/Date.))}))
 
 (defn widget [{:keys [timeout flash]} owner]
   (reify
@@ -27,8 +27,7 @@
       (when (not (empty? next-props))
         (om/set-state! owner :display/state :show)
         (js/clearTimeout (om/get-state owner :handler-id))
-        (om/set-state! owner :handler-id (js/setTimeout #(do (om/update! (flash) {})
-                                                             (om/set-state! owner :display/state :hidden)) (* timeout 2000)))))
+        (om/set-state! owner :handler-id (js/setTimeout #(om/set-state! owner :display/state :hidden) (* timeout 1000)))))
     om/IRenderState
     (render-state [_ state]
       (let [flash (om/observe owner (flash))
