@@ -30,10 +30,10 @@ Make sure the app state has a key called flash, and create a ref-cursor.
 (def flash #(om/ref-cursor (:flash (om/root-cursor state)))
 #+END_SRC
 
-Put the widget somewhere in your application:
+Put the widget in your UI (where it makes most sense). Pass in a map with the flash cursor and a timeout value (measured in seconds).
 
 #+BEGIN_SRC clojure
-(om/build f/widget (:flash flash :timeout 3) {:react-key "Flash"})
+(om/build f/widget {:flash flash :timeout 3})
 #+END_SRC
 
 Now you can use any one of the following: 
