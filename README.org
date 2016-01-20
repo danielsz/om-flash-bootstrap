@@ -19,7 +19,7 @@ Implicit dependencies are [[https://github.com/omcljs/om][Om]] and [[http://getb
 Require the namespace: 
 
 #+BEGIN_SRC clojure
-(require ‘[om-flash-bootstrap.core :as f])
+(require '[om-flash-bootstrap.core :as f])
 #+END_SRC
 
 Make sure the app state has a key called flash, and create a ref-cursor.
