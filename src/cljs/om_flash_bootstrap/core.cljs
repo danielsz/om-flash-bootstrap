@@ -19,26 +19,20 @@
     om/IDisplayName
     (display-name [this]
       "flash")
-    om/IInitState
-    (init-state [_]
-      {:display/state :hidden})
     om/IWillReceiveProps
     (will-receive-props [this next-props]
-      (when (not (empty? next-props))
-        (om/set-state! owner :display/state :show)
+      (when-not (empty? (flash))
         (js/clearTimeout (om/get-state owner :handler-id))
-        (om/set-state! owner :handler-id (js/setTimeout #(om/set-state! owner :display/state :hidden) (* timeout 1000)))))
-    om/IRenderState
-    (render-state [_ state]
-      (let [flash (om/observe owner (flash))
+        (om/set-state! owner :handler-id (js/setTimeout #(om/update! (flash) {}) (* timeout 1000)))))
+    om/IRender
+    (render [_]
+      (let [flash (om/observe owner (flash))           
             types {:success {:class "alert-success" :prefix "Well done!"} 
                    :info {:class "alert-info" :prefix "Info!"}
                    :warning {:class "alert-warning" :prefix "Sorry!"}
                    :danger {:class "alert-danger" :prefix "On no!"}}]
-        (case (:display/state state)
-          :show
+        (when-not (empty? flash)
           (dom/div #js {:id "flash"
                         :className (str "alert fade in " (:class ((:level flash) types)))}
-                   (dom/strong nil (:prefix ((:level flash) types)))
-                   (str " " (:message flash)))
-          :hidden nil)))))
+            (dom/strong nil (:prefix ((:level flash) types)))
+            (str " " (:message flash))))))))
