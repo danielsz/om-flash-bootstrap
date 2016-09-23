@@ -30,7 +30,7 @@
             types {:success {:class "alert-success" :prefix "Well done!"} 
                    :info {:class "alert-info" :prefix "Info!"}
                    :warning {:class "alert-warning" :prefix "Sorry!"}
-                   :danger {:class "alert-danger" :prefix "On no!"}}]
+                   :danger {:class "alert-danger" :prefix "Oh no!"}}]
         (when-not (empty? flash)
           (dom/div #js {:id "flash"
                         :className (str "alert fade in " (:class ((:level flash) types)))}
