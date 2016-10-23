@@ -14,7 +14,7 @@
 (defn info [cursor message]
   (om/update! (cursor) {:message message :level :info :timestamp (.getTime (js/Date.))}))
 
-(defn display [payload]
+(defn display [flash payload]
   (when-let [message (:message payload)]
     (case (:level payload)
       :success (bless flash message)
