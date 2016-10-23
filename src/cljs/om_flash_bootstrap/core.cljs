@@ -14,6 +14,15 @@
 (defn info [cursor message]
   (om/update! (cursor) {:message message :level :info :timestamp (.getTime (js/Date.))}))
 
+(defn display [payload]
+  (when-let [message (:message payload)]
+    (case (:level payload)
+      :success (bless flash message)
+      :warning (warn flash message)
+      :info (info flash message)
+      :danger (alert flash message)
+      (info flash message))))
+
 (defn widget [{:keys [timeout flash]} owner]
   (reify
     om/IDisplayName
