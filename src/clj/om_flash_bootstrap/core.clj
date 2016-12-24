@@ -1,5 +1,6 @@
 (ns om-flash-bootstrap.core
-  (:require [ring.util.response :refer [response content-type]]))
+  (:require [ring.util.response :refer [response content-type]]
+            [compojure.core :refer [routes GET]]))
 
 (defn flash-message [{session :session :as request}]
   (if-let [message (:message session)]
