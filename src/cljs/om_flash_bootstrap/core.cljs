@@ -48,7 +48,7 @@
             (dom/strong nil (:prefix ((:level flash) types)))
             (str " " (:message flash))))))))
 
-(defn get-messages []
+(defn get-messages [flash]
   (GET "/flash" {:response-format (edn-response-format)
                  :handler (fn [payload]
                             (display flash payload))
