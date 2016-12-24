@@ -1,7 +1,7 @@
 (set-env!
  :source-paths   #{"src/cljs"}
  :resource-paths #{"src/cljs"}
- :dependencies '[])
+ :dependencies '[[cljs-ajax "0.5.4"]])
 
 (task-options!
  pom {:project 'org.danielsz/om-flash-bootstrap

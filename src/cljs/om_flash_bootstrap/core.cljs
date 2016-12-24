@@ -1,6 +1,8 @@
 (ns om-flash-bootstrap.core
   (:require [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]))
+            [om.dom :as dom :include-macros true]
+            [ajax.core :refer [GET POST]]
+            [ajax.edn :refer [edn-response-format]]))
 
 (defn warn [cursor message]
   (om/update! (cursor) {:message message :level :warning :timestamp (.getTime (js/Date.))}))
@@ -45,3 +47,10 @@
                         :className (str "alert fade in " (:class ((:level flash) types)))}
             (dom/strong nil (:prefix ((:level flash) types)))
             (str " " (:message flash))))))))
+
+(defn get-messages []
+  (GET "/flash" {:response-format (edn-response-format)
+                 :handler (fn [payload]
+                            (display flash payload))
+                 :error-handler (fn [{:keys [status status-text]}]
+                                  (println "get-messages:" status status-text))}))
