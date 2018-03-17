@@ -1,8 +1,7 @@
 (ns om-flash-bootstrap.core
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [ajax.core :refer [GET POST]]
-            [ajax.edn :refer [edn-response-format]]))
+            [cljs.reader :refer [read-string]]))
 
 (defn warn [cursor message]
   (om/update! (cursor) {:message message :level :warning :timestamp (.getTime (js/Date.))}))
@@ -49,8 +48,5 @@
             (str " " (:message flash))))))))
 
 (defn get-messages [flash]
-  (GET "/flash" {:response-format (edn-response-format)
-                 :handler (fn [payload]
-                            (display flash payload))
-                 :error-handler (fn [{:keys [status status-text]}]
-                                  (println "get-messages:" status status-text))}))
+  (.send goog.net.XhrIo "/flash" (fn [e] (let [payload (.getResponseText (.-target e))]
+                                          (display flash (read-string payload))))))
