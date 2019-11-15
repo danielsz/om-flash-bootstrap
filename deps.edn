@@ -1,0 +1,2 @@
+{:paths ["src/clj" "src/cljs"]
+ :deps {compojure {:mvn/version "1.6.1"}}}
