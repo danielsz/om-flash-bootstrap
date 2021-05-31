@@ -36,7 +36,7 @@
         (om/set-state! owner :handler-id (js/setTimeout #(om/update! (flash) {}) (* timeout 1000)))))
     om/IRender
     (render [_]
-      (let [flash (om/observe owner (flash))           
+      (let [flash (om/observe owner (flash))
             types {:success {:class "alert-success" :prefix "Well done!"} 
                    :info {:class "alert-info" :prefix "Info!"}
                    :warning {:class "alert-warning" :prefix "Sorry!"}
